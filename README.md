@@ -1,63 +1,125 @@
-# 🤖 Agitic
+<div align="center">
 
-> An autonomous, event-driven AI agent system that detects CI/CD pipeline failures, analyzes logs, generates code fixes, and creates GitLab Merge Requests — automatically.
+<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=800&size=40&pause=1000&color=00D4AA&center=true&vCenter=true&width=600&lines=🤖+Agitic;Autonomous+CI%2FCD+Fix+Agent;Pipeline+Fails+%E2%9D%8C+%E2%86%92+MR+Ready+%E2%9C%85" alt="Agitic" />
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
-[![GitLab](https://img.shields.io/badge/GitLab-Duo-orange.svg)](https://gitlab.com)
+<br/>
+
+<p><strong>An autonomous, event-driven AI agent that detects CI/CD pipeline failures, analyzes logs, generates code fixes, and opens GitLab Merge Requests — automatically. Zero human intervention.</strong></p>
+
+<br/>
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-00d4aa.svg?style=for-the-badge)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-2.3+-000000.svg?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991.svg?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
+[![GitLab](https://img.shields.io/badge/GitLab-API-FC6D26.svg?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com)
+
+<br/>
+
+</div>
 
 ---
 
 ## 🎯 The Problem
 
-Developers waste enormous time on repetitive CI/CD failures:
-- Hunting through noisy logs to find the root cause
-- Googling the fix for the 10th time
-- Creating branches, committing fixes, opening MRs manually
-- Context-switching kills flow state
+Every developer knows this loop:
 
-**Agitic eliminates all of that.**
+```
+CI pipeline fails at 2am
+    → dig through 500 lines of logs
+    → google the error (again)
+    → figure out the fix
+    → create a branch
+    → commit the change
+    → open a MR
+    → repeat tomorrow
+```
+
+> **This kills flow state. It's repetitive. It's automatable.**
+
+**Agitic eliminates all of that** — from failure detection to MR creation, fully automated.
 
 ---
 
-## ✨ The Solution
+## ✨ How It Works
 
-A **multi-agent, event-driven workflow** triggered automatically by GitLab pipeline failures:
+<div align="center">
 
 ```
-Pipeline Fails ❌
-      ↓
-Webhook fires → Agitic triggered 🤖
-      ↓
-🧠 Analyzer Agent  — parses logs, identifies root cause
-      ↓
-🔧 Fixer Agent     — generates exact code patch
-      ↓
-🛡️ Security Agent  — scans fix for vulnerabilities (CVEs)
-      ↓
-🦊 GitLab API      — creates branch + commits fix + opens MR
-      ↓
-MR ready for human review ✅
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│   Pipeline Fails ❌                                         │
+│         │                                                   │
+│         ▼                                                   │
+│   Webhook / Manual Trigger                                  │
+│         │                                                   │
+│         ▼                                                   │
+│   ┌─────────────┐                                           │
+│   │ 🧠 Analyzer │  ── parses logs, finds root cause         │
+│   └──────┬──────┘                                           │
+│          │                                                   │
+│          ▼                                                   │
+│   ┌─────────────┐                                           │
+│   │ 🔧 Fixer    │  ── generates exact code patch            │
+│   └──────┬──────┘                                           │
+│          │                                                   │
+│          ▼                                                   │
+│   ┌─────────────┐                                           │
+│   │ 🛡️ Security │  ── scans for CVEs & vulnerabilities      │
+│   └──────┬──────┘                                           │
+│          │                                                   │
+│          ▼                                                   │
+│   ┌─────────────┐     ❌ fails?                             │
+│   │ ✔️ Validator│  ──────────────► retry with hint          │
+│   └──────┬──────┘                      │                    │
+│          │ ✅ passes                    └──► back to Fixer   │
+│          ▼                                                   │
+│   🦊 GitLab: branch + commit + MR                           │
+│         │                                                   │
+│         ▼                                                   │
+│   MR Ready for Human Review ✅                              │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
+
+</div>
 
 ---
 
 ## 🧩 Features
 
-### Core
-- **🧠 Analyzer Agent** — Error type, severity, root cause, affected file, confidence %
-- **🔧 Fixer Agent** — Code patches with before/after diffs and shell commands
-- **🛡️ Security Agent** — CVE detection, secret scanning, vulnerability assessment
-- **✔️ Validator Agent** — Quality gate: decides pass or retry with improvement hints
-- **🔁 Smart Retry Loop** — Retries with full failure context until the fix passes
-- **🦊 GitLab Integration** — Branch creation, file commits, MR with retry history
-- **⚡ Event-Driven** — Webhook trigger on CI failure (zero manual intervention)
+### 🤖 Core Agents
 
-### Bonus
-- **📊 Live Dashboard** — Animated agent flow, retry timeline, run history drawer
-- **🔀 Rich MR Description** — Analysis + security score + retry log in every MR
+| Agent | What it does | Output |
+|-------|-------------|--------|
+| 🧠 **Analyzer** | Reads CI logs, classifies error, finds root cause | `error_type`, `severity`, `root_cause`, `confidence` |
+| 🔧 **Fixer** | Generates a production-ready code patch | `code_before`, `code_after`, `shell_commands` |
+| 🛡️ **Security** | Scans fix for CVEs, secrets, vulnerabilities | `security_score`, `risk_level`, `findings[]` |
+| ✔️ **Validator** | Quality gate — pass or retry with improvement hint | `passes`, `confidence`, `improvement_hint` |
+
+### 🔁 Smart Retry Loop
+
+The Validator closes the feedback loop. On failure, the **exact reason + improvement hint** is fed back to the Fixer so each retry is meaningfully different — not the same prompt re-run.
+
+```
+Fixer generates patch
+        │
+        ▼
+Validator reviews ──── ❌ FAIL ──► hint fed back to Fixer ──► retry
+        │
+        ✅ PASS
+        │
+        ▼
+GitLab MR created
+```
+
+### ⚡ Everything Else
+
+- **📊 Live Dashboard** — animated agent flow, stats, run history, result drawer
+- **🔀 Rich MR Description** — full analysis + security score + retry timeline in every MR
 - **🎛️ REST API** — `/trigger`, `/webhook`, `/api/runs` endpoints
-- **📋 Sample Logs** — 4 built-in test scenarios for demo
+- **🔌 Works without API keys** — full mock mode for local development
+- **🔑 Plug-and-play keys** — add OpenAI + GitLab keys to `.env` and go live instantly
 
 ---
 
@@ -65,26 +127,58 @@ MR ready for human review ✅
 
 ```
 agitic/
-├── app.py                  # Flask server
+├── app.py                  ← Flask server, orchestrates the agent flow
 ├── agents/
-│   ├── analyzer.py         # Analyzer Agent
-│   ├── fixer.py            # Fixer Agent
-│   ├── security.py         # Security Agent
-│   └── validator.py        # Validator Agent
+│   ├── analyzer.py         ← Analyzer Agent  (real OpenAI or mock)
+│   ├── fixer.py            ← Fixer Agent     (real OpenAI or mock)
+│   ├── security.py         ← Security Agent  (real OpenAI or mock)
+│   └── validator.py        ← Validator Agent (real OpenAI or mock)
 ├── gitlab/
-│   └── gitlab_api.py       # GitLab REST API integration
+│   └── gitlab_api.py       ← GitLab REST API (real or mock)
 ├── templates/
-│   └── dashboard.html      # Live monitoring dashboard
-├── .env                    # Your API keys (not committed)
-├── .env.example            # Key template
+│   └── dashboard.html      ← Live monitoring dashboard
+├── .env                    ← Your API keys (never committed)
+├── .env.example            ← Key template
 └── requirements.txt
+```
+
+### Entity Relationship — Agent Data Flow
+
+```
+┌──────────────┐        ┌──────────────┐        ┌──────────────┐
+│   CI Log     │───────▶│   Analyzer   │───────▶│    Fixer     │
+│  (raw text)  │        │              │        │              │
+└──────────────┘        │ error_type   │        │ code_before  │
+                        │ severity     │        │ code_after   │
+                        │ root_cause   │        │ shell_cmds   │
+                        │ affected_file│        │ fix_type     │
+                        │ confidence   │        └──────┬───────┘
+                        └──────────────┘               │
+                                                        ▼
+                        ┌──────────────┐        ┌──────────────┐
+                        │  Validator   │◀───────│   Security   │
+                        │              │        │              │
+                        │ passes       │        │ score /100   │
+                        │ confidence   │        │ risk_level   │
+                        │ verdict      │        │ findings[]   │
+                        │ retry_hint   │        └──────────────┘
+                        └──────┬───────┘
+                               │ passes=true
+                               ▼
+                        ┌──────────────┐
+                        │  GitLab API  │
+                        │              │
+                        │ branch       │
+                        │ commit       │
+                        │ merge request│
+                        └──────────────┘
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Clone & Install
+### 1️⃣ Clone & Install
 
 ```bash
 git clone https://gitlab.com/your-username/agitic
@@ -92,33 +186,46 @@ cd agitic
 pip install -r requirements.txt
 ```
 
-### 2. Configure Environment
+### 2️⃣ Configure Keys
 
 ```bash
 cp .env.example .env
-# Edit .env with your keys
 ```
+
+Open `.env` and fill in your keys:
 
 ```env
+# ── OpenAI (for real AI analysis) ───────────────────────────
 OPENAI_API_KEY=sk-...
+
+# ── GitLab (for real branch/commit/MR) ──────────────────────
 GITLAB_TOKEN=glpat-...
 GITLAB_PROJECT_ID=12345678
+GITLAB_URL=https://gitlab.com
 ```
 
-**Get your keys:**
-- OpenAI: https://platform.openai.com/api-keys
-- GitLab Token: Profile → Access Tokens → scopes: `api`, `write_repository`
-- Project ID: Your GitLab project → Settings → General
+> 💡 **No keys? No problem.** Leave them empty and Agitic runs in full mock mode — all agents work with hardcoded responses so you can explore the dashboard immediately.
 
-### 3. Run
+| Keys configured | Mode |
+|----------------|------|
+| None | Full mock — works instantly |
+| `OPENAI_API_KEY` only | Real AI analysis + mock GitLab |
+| All three | Fully live — real AI + real MR |
+
+**Where to get keys:**
+- 🔑 OpenAI → [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+- 🦊 GitLab Token → Profile → Access Tokens → scopes: `api`, `write_repository`
+- 🆔 Project ID → GitLab project → Settings → General → top of page
+
+### 3️⃣ Run
 
 ```bash
 python app.py
 ```
 
-Open **http://localhost:4367** for the dashboard.
+Open **[http://localhost:4367](http://localhost:4367)** 🚀
 
-### 4. Test It
+### 4️⃣ Trigger Manually
 
 ```bash
 curl -X POST http://localhost:4367/trigger \
@@ -128,21 +235,32 @@ curl -X POST http://localhost:4367/trigger \
 
 ---
 
+## 📸 Screenshots
+
+### Dashboard Overview
+![Dashboard Overview](./Screenshot%202026-03-22%20213418.png)
+
+### Agent Flow Running
+![Agent Flow Running](./Screenshot%202026-03-22%20220418.png)
+
+### Result Drawer — Analysis, Fix, Security, MR
+![Result Drawer](./Screenshot%202026-03-22%20220429.png)
+
+---
+
 ## 🔗 GitLab Webhook Setup
 
-To trigger automatically on real CI failures:
+To trigger automatically on every real CI failure:
 
 1. Go to your GitLab project → **Settings → Webhooks**
-2. URL: `http://your-public-host:4367/webhook`
-3. Trigger: ✅ **Pipeline events**
-4. Save
+2. Set URL: `http://your-public-host:4367/webhook`
+3. Check: ✅ **Pipeline events**
+4. Click **Save**
 
-Now every failed pipeline automatically triggers the agent. 🎉
-
-> **Tip for local dev:** Use [ngrok](https://ngrok.com) to expose localhost:
+> 💡 **Local dev?** Use [ngrok](https://ngrok.com) to expose localhost:
 > ```bash
 > ngrok http 4367
-> # Use the https://xxx.ngrok.io URL in GitLab
+> # Paste the https://xxx.ngrok.io URL into GitLab
 > ```
 
 ---
@@ -152,47 +270,23 @@ Now every failed pipeline automatically triggers the agent. 🎉
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/` | Live dashboard |
-| `POST` | `/trigger` | Manual trigger `{"log": "..."}` |
-| `POST` | `/webhook` | GitLab pipeline webhook |
-| `GET` | `/api/runs` | All run history (JSON) |
+| `POST` | `/trigger` | Manual trigger — body: `{"log": "..."}` |
+| `POST` | `/webhook` | GitLab pipeline webhook receiver |
+| `GET` | `/api/runs` | All run history as JSON |
 | `GET` | `/api/runs/<run_id>` | Single run details |
 
 ---
 
-## 🤖 4-Agent System
+## 🧪 Built-in Test Scenarios
 
-Each agent has a single, focused responsibility and communicates via structured JSON:
+Click any sample in the dashboard to load a real-world error log:
 
-| Agent | Role | Output |
-|-------|------|--------|
-| 🧠 Analyzer | Parses CI logs | error_type, severity, root_cause, confidence |
-| 🔧 Fixer | Generates code patch | code_before/after, shell_commands |
-| 🛡️ Security | CVE & vuln scanning | security_score, risk_level, findings[] |
-| ✔️ Validator | Quality gate + retry decision | passes, confidence, improvement_hint |
-
-### 🔁 Smart Retry Loop
-
-The Validator Agent closes the feedback loop:
-
-```
-generate fix → validate → ❌ failed?
-                             ↓ improvement_hint fed back to Fixer
-                          retry with new context → validate again → ✅
-```
-
-On each failed attempt, the Fixer receives the full history of what was tried
-and why it failed — so retries produce meaningfully different solutions, not
-the same prompt re-run.
-
----
-
-## 📸 Screenshots
-
-![Dashboard Overview](./Screenshot%202026-03-22%20213418.png)
-
-![Agent Flow Running](./Screenshot%202026-03-22%20220418.png)
-
-![Result Drawer](./Screenshot%202026-03-22%20220429.png)
+| Sample | Error | Severity | Retry? |
+|--------|-------|----------|--------|
+| 📦 Module Error | `ModuleNotFoundError` | Medium | No — passes first try |
+| 🗄️ DB Connection | `OperationalError` | Critical | No — passes first try |
+| 🛡️ Security CVE | `CVE-2021-23337` | Critical | Yes — security score too low |
+| 🔴 Syntax Error | `SyntaxError` | High | No — passes first try |
 
 ---
 
@@ -200,4 +294,10 @@ the same prompt re-run.
 
 MIT — see [LICENSE](LICENSE)
 
+---
 
+<div align="center">
+
+Built with 🤖 by humans who got tired of fixing the same CI errors over and over.
+
+</div>
