@@ -1,0 +1,151 @@
+Agitic starting...
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:4367
+Press CTRL+C to quit
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+127.0.0.1 - - [22/Mar/2026 21:14:04] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [22/Mar/2026 21:14:04] "GET /api/runs HTTP/1.1" 200 -
+127.0.0.1 - - [22/Mar/2026 21:14:05] "GET /favicon.ico HTTP/1.1" 404 -
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+127.0.0.1 - - [22/Mar/2026 21:18:21] "GET / HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\analyzer.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\analyzer.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\analyzer.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\fixer.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\fixer.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\security.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\security.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\validator.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\validator.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\gitlab\\gitlab_api.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\gitlab\\gitlab_api.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\validator.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\security.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\fixer.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\gitlab\\gitlab_api.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\analyzer.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\fixer.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\security.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\validator.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\gitlab\\gitlab_api.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\analyzer.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\fixer.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\security.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\agents\\validator.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\gitlab\\gitlab_api.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+ * Detected change in 'c:\\Users\\nares\\OneDrive\\Desktop\\Agitic\\app.py', reloading
+Agitic starting...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 130-935-922

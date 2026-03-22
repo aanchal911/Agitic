@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agitic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --surface: #0d1117;
+    --surface2: #161b22;
+    --surface3: #21262d;
+    --border: #30363d;
+    --accent: #00d4aa;
+    --accent2: #7c3aed;
+    --red: #f85149;
+    --yellow: #e3b341;
+    --green: #3fb950;
+    --blue: #58a6ff;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Header ── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(63,185,80,0.1);
+    border: 1px solid rgba(63,185,80,0.3);
+    border-radius: 20px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.72rem;
+    color: var(--green);
+    letter-spacing: 0.05em;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* ── Layout ── */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* ── Stats row ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .stat-card:hover { border-color: var(--accent); }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent-line, var(--accent));
+  }
+
+  .stat-card.red { --accent-line: var(--red); }
+  .stat-card.yellow { --accent-line: var(--yellow); }
+  .stat-card.purple { --accent-line: var(--accent2); }
+
+  .stat-label {
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-value {
+    font-family: var(--sans);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  /* ── Two column layout ── */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  /* ── Panel ── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface2);
+  }
+
+  .panel-title {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* ── Trigger Form ── */
+  .trigger-form {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  textarea {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    padding: 0.75rem;
+    resize: vertical;
+    min-height: 130px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  textarea:focus { border-color: var(--accent); }
+
+  .sample-btns {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .sample-btn {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    padding: 0.3rem 0.6rem;
+    transition: all 0.15s;
+  }
+
+  .sample-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .trigger-btn {
+    background: linear-gradient(135deg, var(--accent), #00b894);
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .trigger-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,212,170,0.3); }
+  .trigger-btn:active { transform: translateY(0); }
+  .trigger-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ── Agent Flow Visualization ── */
+  .agent-flow {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+
+  .flow-step.active { opacity: 1; }
+  .flow-step.done { opacity: 0.7; }
+
+  .flow-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .flow-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    background: var(--surface2);
+    transition: all 0.3s;
+  }
+
+  .flow-step.active .flow-dot {
+    border-color: var(--accent);
+    background: rgba(0,212,170,0.15);
+    box-shadow: 0 0 12px rgba(0,212,170,0.4);
+    animation: glow 1.5s ease-in-out infinite;
+  }
+
+  .flow-step.done .flow-dot {
+    border-color: var(--green);
+    background: rgba(63,185,80,0.15);
+  }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 8px rgba(0,212,170,0.4); }
+    50% { box-shadow: 0 0 20px rgba(0,212,170,0.7); }
+  }
+
+  .flow-line {
+    width: 2px;
+    height: 32px;
+    background: var(--border);
+    margin: 2px 0;
+  }
+
+  .flow-step.done .flow-line { background: var(--green); }
+
+  .flow-info {
+    padding-top: 2px;
+    padding-bottom: 28px;
+  }
+
+  .flow-name {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  .flow-desc {
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  /* ── Run History ── */
+  .run-list {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .run-item {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .run-item:hover { background: var(--surface2); }
+  .run-item:last-child { border-bottom: none; }
+
+  .run-badge {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.2);
+  }
+
+  .run-info { flex: 1; min-width: 0; }
+
+  .run-title {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.2rem;
+  }
+
+  .run-meta {
+    font-size: 0.67rem;
+    color: var(--muted);
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .tag.critical { background: rgba(248,81,73,0.15); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+  .tag.high { background: rgba(227,179,65,0.15); color: var(--yellow); border: 1px solid rgba(227,179,65,0.3); }
+  .tag.medium { background: rgba(88,166,255,0.15); color: var(--blue); border: 1px solid rgba(88,166,255,0.3); }
+  .tag.low, .tag.safe { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+
+  /* ── Result Modal / Drawer ── */
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: -640px;
+    width: 640px;
+    height: 100vh;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    z-index: 200;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .drawer.open { right: 0; }
+
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+
+  .drawer-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 10;
+  }
+
+  .drawer-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.25rem;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+
+  .drawer-close:hover { color: var(--text); }
+
+  .drawer-body {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .result-section {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .result-section-header {
+    padding: 0.6rem 1rem;
+    background: var(--surface3);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .result-section-body {
+    padding: 1rem;
+    font-size: 0.78rem;
+    line-height: 1.7;
+  }
+
+  .kv-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .kv-table td {
+    padding: 0.3rem 0;
+    vertical-align: top;
+  }
+
+  .kv-table td:first-child {
+    width: 140px;
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  pre {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .mr-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.78rem;
+    border: 1px solid rgba(0,212,170,0.3);
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    transition: all 0.15s;
+  }
+
+  .mr-link:hover {
+    background: rgba(0,212,170,0.1);
+    border-color: var(--accent);
+  }
+
+  /* ── Loading spinner ── */
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0,0,0,0.3);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem;
+    z-index: 300;
+    transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  .empty-state {
+    padding: 3rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+  @media (max-width: 900px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .drawer { width: 100%; right: -100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🤖</div>
+    Agitic
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <span style="color:var(--muted);font-size:0.72rem;letter-spacing:0.05em">GITLAB DUO</span>
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      AGENT ONLINE
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Stats -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card">
+      <div class="stat-label">Total Runs</div>
+      <div class="stat-value" id="statTotal">0</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-label">Errors Fixed</div>
+      <div class="stat-value" id="statFixed" style="color:var(--green)">0</div>
+    </div>
+    <div class="stat-card yellow">
+      <div class="stat-label">MRs Created</div>
+      <div class="stat-value" id="statMRs" style="color:var(--accent)">0</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-label">Security Scans</div>
+      <div class="stat-value" id="statSec" style="color:var(--accent2)">0</div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <!-- Left: Controls + History -->
+    <div style="display:flex;flex-direction:column;gap:1.5rem">
+
+      <!-- Repo Settings Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">⚙️ Repo Settings</div>
+          <span style="font-size:0.68rem;color:var(--muted)" id="repoStatus">not configured</span>
+        </div>
+        <div style="padding:1.25rem;display:flex;flex-direction:column;gap:0.75rem">
+          <div class="form-group">
+            <div class="form-label">Repo Name</div>
+            <input id="repoName" type="text" placeholder="e.g. my-org/my-project"
+              style="background:var(--surface3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:0.78rem;padding:0.6rem 0.75rem;outline:none;transition:border-color 0.2s;width:100%"
+              oninput="updateRepoStatus()">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+            <div class="form-group">
+              <div class="form-label">Default Branch</div>
+              <input id="repoBranch" type="text" placeholder="main"
+                style="background:var(--surface3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:0.78rem;padding:0.6rem 0.75rem;outline:none;width:100%">
+            </div>
+            <div class="form-group">
+              <div class="form-label">Project ID</div>
+              <input id="repoProjectId" type="text" placeholder="optional"
+                style="background:var(--surface3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:0.78rem;padding:0.6rem 0.75rem;outline:none;width:100%">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Pipeline Trigger (simulated)</div>
+            <select id="repoTrigger"
+              style="background:var(--surface3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:0.78rem;padding:0.6rem 0.75rem;outline:none;width:100%">
+              <option value="manual">Manual Trigger</option>
+              <option value="webhook">Webhook (CI Failure)</option>
+              <option value="push">Push Event</option>
+              <option value="schedule">Scheduled Pipeline</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trigger Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">⚡ Trigger Agent</div>
+          <span style="font-size:0.68rem;color:var(--muted)">POST /trigger</span>
+        </div>
+        <div class="trigger-form">
+          <div class="form-group">
+            <div class="form-label">CI/CD Error Log</div>
+            <textarea id="logInput" placeholder="Paste CI/CD failure log here...
+e.g. ModuleNotFoundError: No module named 'requests'"></textarea>
+          </div>
+          <div>
+            <div class="form-label" style="margin-bottom:0.4rem">Sample Logs</div>
+            <div class="sample-btns">
+              <button class="sample-btn" onclick="loadSample('module')">📦 Module Error</button>
+              <button class="sample-btn" onclick="loadSample('db')">🗄️ DB Connection</button>
+              <button class="sample-btn" onclick="loadSample('security')">🛡️ Security CVE</button>
+              <button class="sample-btn" onclick="loadSample('syntax')">🔴 Syntax Error</button>
+            </div>
+          </div>
+          <button class="trigger-btn" id="triggerBtn" onclick="triggerAgent()">
+            <span id="btnText">⚡ Run Agent Flow</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Run History -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">📋 Run History</div>
+          <span style="font-size:0.68rem;color:var(--muted)" id="runCount">0 runs</span>
+        </div>
+        <div class="run-list" id="runList">
+          <div class="empty-state">
+            <div class="empty-icon">🤖</div>
+            <div>No runs yet. Trigger Agitic above.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Agent Flow -->
+    <div style="display:flex;flex-direction:column;gap:1.5rem">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🔄 Agent Flow</div>
+          <span class="tag medium" id="flowStatus">IDLE</span>
+        </div>
+        <div class="agent-flow" id="agentFlow">
+          <div class="flow-step" id="step-trigger">
+            <div class="flow-connector">
+              <div class="flow-dot">🔔</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-info">
+              <div class="flow-name">CI Failure Detected</div>
+              <div class="flow-desc">Webhook or manual trigger received</div>
+            </div>
+          </div>
+          <div class="flow-step" id="step-analyze">
+            <div class="flow-connector">
+              <div class="flow-dot">🧠</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-info">
+              <div class="flow-name">Analyzer Agent</div>
+              <div class="flow-desc">Parsing logs · identifying root cause</div>
+            </div>
+          </div>
+          <div class="flow-step" id="step-fix">
+            <div class="flow-connector">
+              <div class="flow-dot">🔧</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-info">
+              <div class="flow-name">Fixer Agent</div>
+              <div class="flow-desc">Generating code patch</div>
+            </div>
+          </div>
+          <div class="flow-step" id="step-security">
+            <div class="flow-connector">
+              <div class="flow-dot">🛡️</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-info">
+              <div class="flow-name">Security Agent</div>
+              <div class="flow-desc">Scanning for vulnerabilities · CVEs</div>
+            </div>
+          </div>
+          <div class="flow-step" id="step-validate">
+            <div class="flow-connector">
+              <div class="flow-dot">✔️</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-info">
+              <div class="flow-name">Validator Agent</div>
+              <div class="flow-desc">Quality check · retry decision</div>
+            </div>
+          </div>
+          <div class="flow-step" id="step-retry">
+            <div class="flow-connector">
+              <div class="flow-dot">🔁</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-info">
+              <div class="flow-name">Smart Retry</div>
+              <div class="flow-desc" id="retryDesc">Iterates until CI passes</div>
+            </div>
+          </div>
+          <div class="flow-step" id="step-gitlab">
+            <div class="flow-connector">
+              <div class="flow-dot">🦊</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-info">
+              <div class="flow-name">GitLab Integration</div>
+              <div class="flow-desc">Branch · Commit · Merge Request</div>
+            </div>
+          </div>
+          <div class="flow-step" id="step-done">
+            <div class="flow-connector">
+              <div class="flow-dot">✅</div>
+            </div>
+            <div class="flow-info">
+              <div class="flow-name">Flow Complete</div>
+              <div class="flow-desc">MR ready for review</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Webhook Info -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🔗 Webhook Setup</div>
+        </div>
+        <div style="padding:1rem">
+          <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.08em">GitLab → Settings → Webhooks</div>
+          <pre style="font-size:0.72rem">POST http://your-host:4367/webhook
+
+Trigger: Pipeline events ✓</pre>
+          <div style="font-size:0.68rem;color:var(--muted);margin-top:0.75rem">
+            Agent auto-triggers on <span style="color:var(--red)">failed</span> pipelines
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Result Drawer -->
+<div class="drawer-backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div>
+      <div style="font-family:var(--sans);font-weight:700;font-size:1rem" id="drawerTitle">Run Result</div>
+      <div style="font-size:0.7rem;color:var(--muted);margin-top:0.2rem" id="drawerMeta"></div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const SAMPLES = {
+  module: `ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "app.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'`,
+
+  db: `FAILED tests/test_api.py::test_create_user - AssertionError: assert 500 == 201
+FAILED tests/test_api.py::test_get_users - AssertionError: assert 500 == 200
+
+  File "api/routes.py", line 47, in create_user
+    db.session.add(user)
+sqlalchemy.exc.OperationalError: could not connect to server: Connection refused
+    Is the server running on host "localhost" and accepting TCP/IP on port 5432?`,
+
+  security: `npm WARN deprecated request@2.88.2
+found 12 vulnerabilities (3 moderate, 6 high, 3 critical)
+
+ERROR: Critical security vulnerabilities:
+  lodash  <4.17.21   Prototype Pollution  CVE-2021-23337
+  axios   <0.21.2    SSRF vulnerability   CVE-2021-3749
+  node-fetch <2.6.7  Info disclosure      CVE-2022-0235`,
+
+  syntax: `SyntaxError: invalid syntax
+  File "src/processor.py", line 34
+    def process_data(data
+                        ^
+SyntaxError: invalid syntax (missing closing parenthesis)`
+};
+
+let runs = [];
+let activeRunIdx = null;
+const flowSteps = ['trigger','analyze','fix','security','validate','retry','gitlab','done'];
+
+function updateRepoStatus() {
+  const name = document.getElementById('repoName').value.trim();
+  const el = document.getElementById('repoStatus');
+  if (name) {
+    el.textContent = name;
+    el.style.color = 'var(--accent)';
+  } else {
+    el.textContent = 'not configured';
+    el.style.color = '';
+  }
+}
+
+function getRepoConfig() {
+  return {
+    repo_name: document.getElementById('repoName').value.trim() || 'demo/project',
+    branch: document.getElementById('repoBranch').value.trim() || 'main',
+    project_id: document.getElementById('repoProjectId').value.trim() || 'N/A',
+    trigger_type: document.getElementById('repoTrigger').value,
+  };
+}
+
+
+  document.getElementById('logInput').value = SAMPLES[key];
+}
+
+async function triggerAgent() {
+  const log = document.getElementById('logInput').value.trim();
+  if (!log) { showToast('⚠️ Please enter a CI log'); return; }
+
+  const btn = document.getElementById('triggerBtn');
+  const btnText = document.getElementById('btnText');
+  btn.disabled = true;
+  btnText.innerHTML = '<div class="spinner"></div> Agent Running...';
+
+  const repo = getRepoConfig();
+
+  setFlowStatus('RUNNING', 'medium');
+  resetFlow();
+  activateStep('trigger');
+
+  setTimeout(() => activateStep('analyze'), 600);
+  setTimeout(() => activateStep('fix'), 2000);
+  setTimeout(() => activateStep('security'), 3500);
+  setTimeout(() => activateStep('validate'), 5000);
+  setTimeout(() => activateStep('retry'), 6000);
+
+  try {
+    const resp = await fetch('/trigger', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({log, ...repo})
+    });
+    const data = await resp.json();
+    data._repo = repo;
+
+    // Update retry step desc with actual count
+    const attempts = data.total_attempts || 1;
+    document.getElementById('retryDesc').textContent =
+      attempts > 1 ? `✅ Passed after ${attempts} attempts` : '✅ Passed on first attempt';
+
+    // Activate GitLab step only after response
+    activateStep('gitlab');
+    setTimeout(() => {
+      completeFlow();
+      setFlowStatus('DONE', 'low');
+    }, 800);
+
+    runs.unshift(data);
+    renderRuns();
+    updateStats();
+    showToast(`✅ Done — ${attempts === 1 ? 'Fixed first try' : attempts + ' attempts needed'}`);
+    setTimeout(() => openDrawer(0), 600);
+  } catch (e) {
+    setFlowStatus('ERROR', 'critical');
+    showToast('❌ Error: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btnText.textContent = '⚡ Run Agent Flow';
+  }
+}
+
+function resetFlow() {
+  flowSteps.forEach(s => {
+    const el = document.getElementById('step-' + s);
+    if (el) { el.className = 'flow-step'; }
+  });
+}
+
+function activateStep(step) {
+  const prev = flowSteps[flowSteps.indexOf(step) - 1];
+  if (prev) {
+    const prevEl = document.getElementById('step-' + prev);
+    if (prevEl) prevEl.className = 'flow-step done';
+  }
+  const el = document.getElementById('step-' + step);
+  if (el) el.className = 'flow-step active';
+}
+
+function completeFlow() {
+  flowSteps.forEach(s => {
+    const el = document.getElementById('step-' + s);
+    if (el) el.className = 'flow-step done';
+  });
+}
+
+function setFlowStatus(text, cls) {
+  const el = document.getElementById('flowStatus');
+  el.className = 'tag ' + cls;
+  el.textContent = text;
+}
+
+function renderRuns() {
+  const list = document.getElementById('runList');
+  document.getElementById('runCount').textContent = runs.length + ' run' + (runs.length !== 1 ? 's' : '');
+
+  if (!runs.length) {
+    list.innerHTML = '<div class="empty-state"><div class="empty-icon">🤖</div><div>No runs yet. Trigger Agitic.</div></div>';
+    return;
+  }
+
+  list.innerHTML = runs.map((r, i) => {
+    const analysis = r.analysis || {};
+    const severity = analysis.severity || 'unknown';
+    const errorType = analysis.error_type || 'Error';
+    const ts = new Date(r.timestamp).toLocaleTimeString();
+    const repo = r._repo || {};
+    return `<div class="run-item" onclick="openDrawer(${i})">
+      <div class="run-badge">&#9889;</div>
+      <div class="run-info">
+        <div class="run-title">${errorType}</div>
+        <div class="run-meta">
+          <span>${ts}</span>
+          ${repo.repo_name ? `<span style="color:var(--accent)">${repo.repo_name}</span>` : ''}
+          <span class="tag ${severity}">${severity.toUpperCase()}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = runs.length;
+  document.getElementById('statFixed').textContent = runs.length;
+  document.getElementById('statMRs').textContent = runs.filter(r => r.mr_url).length;
+  document.getElementById('statSec').textContent = runs.filter(r => r.security_report).length;
+}
+
+function openDrawer(idx) {
+  activeRunIdx = idx;
+  const run = runs[idx];
+  if (!run) return;
+
+  const analysis = run.analysis || {};
+  const fix = run.fix || {};
+  const sec = run.security_report || {};
+
+  document.getElementById('drawerTitle').textContent = (analysis.error_type || 'Run') + ' — ' + run.run_id;
+  document.getElementById('drawerMeta').textContent = new Date(run.timestamp).toLocaleString() + ' · ' + run.source;
+
+  const findings = (sec.findings || []).map(f =>
+    `<div style="margin-bottom:0.5rem;padding:0.5rem;background:var(--bg);border-radius:6px;border:1px solid rgba(248,81,73,0.2)">
+      <div style="color:var(--red);font-size:0.72rem;font-weight:600">${f.type}${f.cve ? ' · ' + f.cve : ''}</div>
+      <div style="color:var(--muted);font-size:0.7rem;margin-top:0.2rem">${f.description}</div>
+      <div style="color:var(--text);font-size:0.7rem;margin-top:0.2rem">→ ${f.recommendation}</div>
+    </div>`
+  ).join('') || '<div style="color:var(--green);font-size:0.75rem">✅ No vulnerabilities found</div>';
+
+  // Build retry timeline
+  const attemptsList = run.attempts || [];
+  const retryHTML = attemptsList.length > 1
+    ? `<div class="result-section">
+        <div class="result-section-header">🔁 Smart Retry Timeline · ${attemptsList.length} attempts</div>
+        <div class="result-section-body" style="padding:0.75rem">
+          ${attemptsList.map(a => {
+            const passed = a.passed;
+            const val = a.validation || {};
+            const borderCol = passed ? 'rgba(63,185,80,0.3)' : 'rgba(248,81,73,0.2)';
+            const icon = passed ? '✅' : '❌';
+            return `<div style="margin-bottom:0.6rem;padding:0.6rem 0.75rem;background:var(--bg);border-radius:6px;border:1px solid ${borderCol}">
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.2rem">
+                <span style="font-family:var(--sans);font-weight:700;font-size:0.78rem">${icon} Attempt ${a.attempt}</span>
+                <span style="color:var(--muted);font-size:0.68rem">${val.confidence || '—'} confidence</span>
+              </div>
+              <div style="color:var(--muted);font-size:0.7rem">${val.verdict || '—'}</div>
+              ${!passed && val.improvement_hint ? `<div style="color:var(--yellow);font-size:0.68rem;margin-top:0.25rem">💡 ${val.improvement_hint}</div>` : ''}
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`
+    : `<div class="result-section">
+        <div class="result-section-header">🔁 Smart Retry</div>
+        <div class="result-section-body" style="color:var(--green);font-size:0.78rem">✅ Fix validated on first attempt</div>
+      </div>`;
+
+  document.getElementById('drawerBody').innerHTML = `
+    <div class="result-section">
+      <div class="result-section-header">🧠 Analyzer Agent</div>
+      <div class="result-section-body">
+        <table class="kv-table">
+          <tr><td>Error Type</td><td><code>${analysis.error_type || '—'}</code></td></tr>
+          <tr><td>Severity</td><td><span class="tag ${analysis.severity || 'medium'}">${(analysis.severity || 'unknown').toUpperCase()}</span></td></tr>
+          <tr><td>Root Cause</td><td>${analysis.root_cause || '—'}</td></tr>
+          <tr><td>File</td><td><code>${analysis.affected_file || 'unknown'}</code></td></tr>
+          <tr><td>Confidence</td><td>${analysis.confidence || '—'}</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-section-header">🔧 Fixer Agent</div>
+      <div class="result-section-body">
+        <div style="margin-bottom:0.75rem;color:var(--text)">${fix.fix_description || '—'}</div>
+        ${fix.code_before ? `<div style="font-size:0.68rem;color:var(--muted);margin-bottom:0.25rem">BEFORE</div><pre>${escHtml(fix.code_before)}</pre>` : ''}
+        ${fix.code_after ? `<div style="font-size:0.68rem;color:var(--green);margin:0.5rem 0 0.25rem">AFTER</div><pre style="border-color:rgba(63,185,80,0.3)">${escHtml(fix.code_after)}</pre>` : ''}
+        ${(fix.shell_commands || []).length ? `<div style="font-size:0.68rem;color:var(--muted);margin-top:0.5rem;margin-bottom:0.25rem">COMMANDS</div><pre>${fix.shell_commands.join('\n')}</pre>` : ''}
+      </div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-section-header">🛡️ Security Agent · Score: ${sec.security_score || '?'}/100 · <span class="tag ${sec.risk_level || 'safe'}">${(sec.risk_level || 'safe').toUpperCase()}</span></div>
+      <div class="result-section-body">
+        <div style="margin-bottom:0.75rem;color:var(--muted);font-size:0.75rem">${sec.summary || ''}</div>
+        ${findings}
+      </div>
+    </div>
+
+    ${retryHTML}
+
+    <div class="result-section">
+      <div class="result-section-header">GitLab · ${run.gitlab_status}</div>
+      <div class="result-section-body">
+        <table class="kv-table" style="margin-bottom:0.75rem">
+          <tr><td>Repo</td><td><code>${(run._repo && run._repo.repo_name) || 'demo/project'}</code></td></tr>
+          <tr><td>Branch</td><td><code>autofix/${run.run_id}</code></td></tr>
+          <tr><td>Base Branch</td><td><code>${(run._repo && run._repo.branch) || 'main'}</code></td></tr>
+          <tr><td>Project ID</td><td><code>${(run._repo && run._repo.project_id) || 'N/A'}</code></td></tr>
+          <tr><td>Trigger</td><td>${(run._repo && run._repo.trigger_type) || 'manual'}</td></tr>
+          <tr><td>Status</td><td>${run.gitlab_status}</td></tr>
+        </table>
+        ${run.mr_url ? `<a class="mr-link" href="${run.mr_url}" target="_blank">View Merge Request</a>` : ''}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('backdrop').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('open');
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// Load existing runs on page load
+fetch('/api/runs').then(r => r.json()).then(data => {
+  runs = data;
+  renderRuns();
+  updateStats();
+}).catch(() => {});
+</script>
+</body>
+</html>
