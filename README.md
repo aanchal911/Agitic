@@ -1,12 +1,6 @@
-<div align="center">
+# 🤖 Agitic
 
-<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=800&size=40&pause=1000&color=00D4AA&center=true&vCenter=true&width=600&lines=🤖+Agitic;Autonomous+CI%2FCD+Fix+Agent;Pipeline+Fails+%E2%9D%8C+%E2%86%92+MR+Ready+%E2%9C%85" alt="Agitic" />
-
-<br/>
-
-<p><strong>An autonomous, event-driven AI agent that detects CI/CD pipeline failures, analyzes logs, generates code fixes, and opens GitLab Merge Requests — automatically. Zero human intervention.</strong></p>
-
-<br/>
+> 🚀 Autonomous CI/CD Fix Agent — Pipeline Fails ❌ → MR Ready ✅
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-00d4aa.svg?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
@@ -14,9 +8,7 @@
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991.svg?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
 [![GitLab](https://img.shields.io/badge/GitLab-API-FC6D26.svg?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com)
 
-<br/>
-
-</div>
+**An autonomous, event-driven AI agent that detects CI/CD pipeline failures, analyzes logs, generates code fixes, and opens GitLab Merge Requests — automatically. Zero human intervention.**
 
 ---
 
@@ -296,8 +288,4 @@ MIT — see [LICENSE](LICENSE)
 
 ---
 
-<div align="center">
-
 Built with 🤖 by humans who got tired of fixing the same CI errors over and over.
-
-</div>
